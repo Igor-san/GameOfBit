@@ -1,0 +1,127 @@
+#:import DIE_COLOR_RGBA utility.constants.DIE_COLOR_RGBA
+#:import Game ui.game.Game
+
+<Game>:
+    orientation : "vertical"
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint : 1, 0.15
+        pos_hint : {"center_x" : .5}
+
+        GridLayout:
+            canvas.before:
+                Color:
+                    rgba: .5, 0.1, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            cols: 2
+            padding: 5
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    padding : "10dp"
+                    spacing : "20dp"
+                    size_hint : 1, .6
+                    pos_hint : {"center_x" : .5}
+                    ToggleButton:
+                        id: Toggle_Play_Pause
+                        text : "Старт"
+                        bold : True
+                        on_state: grid.on_toggle_state(self)
+
+                    Button:
+                        text : "Очистить"
+                        on_press: grid.clear(True)
+
+                    Button:
+                        text : "Случайные ячейки"
+                        on_press : grid.random_cells(True)
+                        disabled : not Toggle_Play_Pause.state=="normal"
+                    BoxLayout:
+                        padding : 0
+                        spacing : 0
+                        Label:
+                            text: '№'
+                            size_hint : 0.1, 1
+                        Label:
+                            id : iterations
+                            text: str(grid.iterations)
+                            size_hint: (0.5,0.5)
+                            pos_hint: {"center_x": .5, "center_y": .5}
+                            font_name : "fonts/Lcd.ttf"
+                            font_size: "32dp"
+                            color: 1, 0, .6
+                        Label:
+                            text: 'из'
+                            size_hint : 0.1, 1
+                        Label:
+                            id : loop_count
+                            text: str(grid.loop_count)
+                            size_hint: (0.5,0.5)
+                            pos_hint: {"center_x": .5, "center_y": .5}
+                            font_name : "fonts/Lcd.ttf"
+                            font_size: "32dp"
+                            color: 1, 1, .6
+
+                BoxLayout:
+                    size_hint : 1, .4
+                    Label:
+                        id: label_use_db
+                        text: 'Использование базы'
+                        halign: "left"
+                        size_hint : 0.7, 1
+
+                    Label:
+                        text: 'Найдено совпадений:'
+                        halign: "right"
+                        valign: "middle"
+                        size_hint : 0.2, 1
+
+                    Label:
+                        halign: "left"
+                        text: str(grid.founded_int)
+                        font_name : "fonts/Lcd.ttf"
+                        font_size: "24dp"
+                        size_hint : 0.1, 1
+                        color: 0, 1, 0, 1
+
+            Slider:
+                id: slider
+                orientation: "vertical"
+                min: 1
+                max: 50
+                value: grid.fps
+                value_track: True
+                value_track_color: 1, 0, 0, 1
+                on_value: grid.change_fps(self)
+                cursor_size: (25,25)
+                size_hint: (.1, 1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    Grid:
+        id: grid
+
+<Grid>:
+    id: grid
+    canvas.before:
+        Color:
+            rgba: .5, 0.1, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    spacing: 1, 1
+    padding: 10, 10, 10, 30
+
+
+<Cell>:
+    text: root.atext
+    color: 0, 0, 0 , 1
+    canvas.before:
+        Color:
+            rgba: DIE_COLOR_RGBA
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+

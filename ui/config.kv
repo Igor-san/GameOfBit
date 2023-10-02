@@ -1,0 +1,63 @@
+#:import Config ui.config.Config
+
+<Config>:
+    name: 'config'
+    use_db_switch: use_db_switch  # Global variable use_db references the id use_db_switch
+    loop_game_switch: loop_game_switch
+    text_input: text_input
+    BoxLayout:
+        padding : "10dp"
+        spacing : "20dp"
+        orientation: 'vertical'
+        GridLayout:
+            canvas.before:
+                Color:
+                    rgba: .5, 0.1, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            rows: 3
+            cols: 2
+            padding: 10
+            spacing: 10
+            row_default_height: 30
+            size_hint: 1, .5
+            Label:
+                text: "Использовать базу"
+            Switch:
+                id: use_db_switch
+                disabled: False
+                on_active: root.switch_callback(self, self.active)
+
+            Label:
+                text: "Путь к базе"
+            BoxLayout:
+                padding : 0
+                spacing : 0
+                orientation: 'horizontal'
+                size_hint: 2,.2
+                TextInput:
+                    id: text_input
+                    size_hint: 2,1
+                    text: ''
+                    multiline: False
+                Button:
+                    text: 'Выбрать'
+                    on_release: root.show_open_dialog()
+                    size_hint: 0.5, 1
+            Label:
+                text: "Зациклить игру"
+            Switch:
+                id: loop_game_switch
+                disabled: False
+                on_active: root.switch_callback(self, self.active)
+
+        Button:
+            id: button_save
+            text: 'Сохранить настройки'
+            background_color: root.rgba
+            on_press: root.save_config()
+            pos_hint: {"center_x": .5}
+            size_hint: (0.2, 0.2)
+
+        Widget: # чтобы кверху притянуть все

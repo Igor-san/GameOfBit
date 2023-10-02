@@ -1,0 +1,46 @@
+#:import Factory kivy.factory.Factory
+#https://kivy.org/doc/stable/api-kivy.factory.html
+
+#  include the kv files for the other Screens
+#: include ui/config.kv
+#: include ui/founded.kv
+#: include ui/game.kv
+
+<RootWidget>:
+    manager: manager
+    do_default_tab: False
+    # add a ScreenManager to the panel
+    ScreenManager:
+        id: manager
+        Screen:
+            id: sc1
+            name: 'Game'
+            text: 'Игра'
+            Game:
+                id: game
+        Config:
+            id: sc2
+            name: 'Config'
+            text: 'Настройки'
+        Founded:
+            id: sc3
+            name: 'Founded'
+            text: 'Найдено'
+
+    TabbedPanelHeader:
+        text: sc1.text
+        # store a screen name to link the tab to a screen
+        screen: sc1.name
+    TabbedPanelHeader:
+        text: sc2.text
+        screen: sc2.name
+    TabbedPanelHeader:
+        text: sc3.text
+        screen: sc3.name
+
+
+
+
+
+
+
