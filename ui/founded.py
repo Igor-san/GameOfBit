@@ -10,13 +10,14 @@ from utility.constants import FOUNDED_FILENAME
 
 class Founded(Screen):
     text_input = ObjectProperty(None)
+    label_filepath = ObjectProperty(None)
     __instance = None
 
     def __new__(cls, **kwargs):
         ''' Делаем синглтоном чтобы из других классов добавлять строки в ObjectProperty
         :param kwargs:
         '''
-        print('Founded __new__ cls.__instance', cls.__instance)
+
         if cls.__instance is None:
             cls.__instance = super(Founded, cls).__new__(cls)
             cls.__instance.__initialized = False
@@ -33,8 +34,8 @@ class Founded(Screen):
         ''' Тут можно установить сохраненные представления
         :return:
         '''
-        self.load(FOUNDED_FILENAME)
-
+        filepath = os.path.join(os.environ["APP_ROOT"], FOUNDED_FILENAME)
+        self.load(filepath)
         pass
 
     def add_line(self, line: str ='\n'):
@@ -42,8 +43,11 @@ class Founded(Screen):
         pass
     def load(self, filepath: str):
         if os.path.exists(filepath):
+            self.label_filepath.text = filepath
             with open(filepath) as stream:
                 self.text_input.text = stream.read()
+        else:
+            self.label_filepath.text = f'файл {filepath} не существует'
     pass
 
 Factory.register('Founded', cls=Founded)

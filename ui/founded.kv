@@ -2,8 +2,16 @@
 
 <Founded>:
     text_input: text_input
+    label_filepath: label_filepath
     BoxLayout:
         orientation: 'vertical'
-        TextInput:
-            id: text_input
+        Label:
+            id: label_filepath
             text: ''
+            size_hint: (None, None)
+            pos_hint: {"center_x": .5, "center_y": .5}
+            height: 30
+        BoxLayout:
+            TextInput:
+                id: text_input
+                text: ''

@@ -27,7 +27,7 @@ if getattr(sys, "frozen", False):
 else:
     os.environ["APP_ROOT"] = str(Path(__file__).parent)
 
-print('APP_ROOT', os.environ["APP_ROOT"])
+# print('APP_ROOT', os.environ["APP_ROOT"])
 
 # Инициализируем логгер в консоль и файл для отладки
 logger.add('logs/output_{time:YYYY-MM-DD}.log', rotation="1 day",  level='DEBUG')
